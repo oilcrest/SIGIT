@@ -1,16 +1,24 @@
 # sigit/services/user_recon.py
-from typing import List, Dict
-
-from ..core.client import AsyncClient
-from ..core.colors import Colors
+from typing import ClassVar, Dict, List, Optional
 
 import asyncio
 
+from ..core.base import BaseService, Category, InputType, ResultType, ServiceResult
+from ..core.client import AsyncClient
+from ..core.colors import Colors
+
 c = Colors()
 
-class UserRecon:
-    
-    PLATFORMS = [
+
+class UserRecon(BaseService):
+
+    name: ClassVar[str] = "UserRecon"
+    description: ClassVar[str] = "Username reconnaissance across 100+ platforms"
+    category: ClassVar[Category] = Category.SOCIAL
+    input_type: ClassVar[InputType] = InputType.USERNAME
+    input_label: ClassVar[str] = "enter username"
+
+    PLATFORMS: ClassVar[List[str]] = [
         "https://facebook.com/{username}",
         "https://instagram.com/{username}",
         "https://twitter.com/{username}",
@@ -186,11 +194,22 @@ class UserRecon:
         "https://gopay.co.id/profile/{username}",
     ]
 
+    async def execute(self, target: str) -> ServiceResult:
+        results = await self.check_username(target)
+        if results:
+            return ServiceResult.ok(results, result_type=ResultType.TABLE)
+        return ServiceResult.fail("No results found")
+
+    # -- legacy static API (preserved for backward compatibility) --
+
     @staticmethod
     async def check_username(username: str) -> List[Dict[str, str]]:
-        results = []
+        results: List[Dict[str, str]] = []
         async with AsyncClient() as client:
-            tasks = [UserRecon._check_platform(client, url.format(username=username)) for url in UserRecon.PLATFORMS]
+            tasks = [
+                UserRecon._check_platform(client, url.format(username=username))
+                for url in UserRecon.PLATFORMS
+            ]
             for coro in asyncio.as_completed(tasks):
                 result = await coro
                 if result:
@@ -198,12 +217,12 @@ class UserRecon:
         return results
 
     @staticmethod
-    async def _check_platform(client: AsyncClient, url: str) -> Dict | None:
+    async def _check_platform(client: AsyncClient, url: str) -> Optional[Dict[str, str]]:
         status, _ = await client.get(url)
         if status == 200:
-            return {"url": url, "status": status, "color": c.GREEN}
+            return {"url": url, "status": str(status), "color": c.GREEN}
         elif status == 404:
-            return {"url": url, "status": status, "color": c.RED}
+            return {"url": url, "status": str(status), "color": c.RED}
         elif status > 0:
-            return {"url": url, "status": status, "color": c.YELLOW}
+            return {"url": url, "status": str(status), "color": c.YELLOW}
         return None

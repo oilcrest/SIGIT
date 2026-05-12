@@ -1,10 +1,18 @@
-from typing import Dict
+from typing import ClassVar, Dict, List
 
+from ..core.base import BaseService, Category, InputType, ResultType, ServiceResult
 from ..core.client import AsyncClient
 
-class TechStackDetector:
-    
-    PATTERNS = {
+
+class TechStackDetector(BaseService):
+
+    name: ClassVar[str] = "TechDetector"
+    description: ClassVar[str] = "Detect CMS, Framework, CDN, Analytics"
+    category: ClassVar[Category] = Category.RECON
+    input_type: ClassVar[InputType] = InputType.URL
+    input_label: ClassVar[str] = "enter URL"
+
+    PATTERNS: ClassVar[Dict[str, List[str]]] = {
         'WordPress': ['wp-content', 'wp-includes'],
         'Joomla': ['joomla'], 'Drupal': ['drupal'],
         'React': ['react', '_reactRoot'], 'Vue.js': ['vue', '__vue__'],
@@ -12,9 +20,18 @@ class TechStackDetector:
         'jQuery': ['jquery']
     }
 
+    async def execute(self, target: str) -> ServiceResult:
+        url = target if target.startswith(('http://', 'https://')) else f'https://{target}'
+        data = await self.detect(url)
+        return ServiceResult.ok(data, result_type=ResultType.KEY_VALUE)
+
+    # -- legacy static API --
+
     @staticmethod
     async def detect(url: str) -> Dict:
-        tech = {'servers': [], 'frameworks': [], 'analytics': [], 'cdn': []}
+        tech: Dict[str, List[str]] = {
+            'servers': [], 'frameworks': [], 'analytics': [], 'cdn': [],
+        }
         async with AsyncClient() as client:
             status, html = await client.get(url)
             if status != 200:

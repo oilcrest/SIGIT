@@ -4,7 +4,10 @@ class Colors:
     YELLOW = "\033[33m"
     BLUE = "\033[34m"
     PURPLE = "\033[35m"
+    CYAN = "\033[36m"
     DIM = "\033[2;37m"
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
     RESET = "\033[0m"
     
     BG_WHITE = f"{RESET}\033[1;47m"

@@ -1,14 +1,9 @@
-<div align="center">
-  <p>
-    <strong>SIGIT</strong> - Simple Information Gathering Toolkit
-  </p>
-  <p>
-    <img src="https://img.shields.io/github/license/termuxhackers-id/SIGIT?style=for-the-badge&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
-    <img src="https://img.shields.io/github/last-commit/termuxhackers-id/SIGIT?style=for-the-badge&logo=git&logoColor=white&color=0080ff" alt="last-commit">
-    <img src="https://img.shields.io/github/languages/top/termuxhackers-id/SIGIT?style=for-the-badge&color=0080ff" alt="repo-top-language">
-    <img src="https://img.shields.io/badge/Python-3.12%2B-blue?style=for-the-badge&logo=python&logoColor=white&color=0080ff" alt="Python">
-  </p>
-</div>
+<p>
+  <img src="https://img.shields.io/github/license/termuxhackers-id/SIGIT?style=for-the-badge&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
+  <img src="https://img.shields.io/github/last-commit/termuxhackers-id/SIGIT?style=for-the-badge&logo=git&logoColor=white&color=0080ff" alt="last-commit">
+  <img src="https://img.shields.io/github/languages/top/termuxhackers-id/SIGIT?style=for-the-badge&color=0080ff" alt="repo-top-language">
+  <img src="https://img.shields.io/badge/Python-3.12%2B-blue?style=for-the-badge&logo=python&logoColor=white&color=0080ff" alt="Python">
+</p>
 
 [![asciicast](https://asciinema.org/a/1039188.svg)](https://asciinema.org/a/1039188)
 
@@ -77,7 +72,7 @@ python run.py
 
 ---
 
-## ⌨️ Usage
+## Usage
 
 Run the toolkit:
 ```bash

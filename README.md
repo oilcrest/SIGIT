@@ -1,5 +1,4 @@
 <p>
-  <img src="https://img.shields.io/github/license/termuxhackers-id/SIGIT?style=for-the-badge&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
   <img src="https://img.shields.io/github/last-commit/termuxhackers-id/SIGIT?style=for-the-badge&logo=git&logoColor=white&color=0080ff" alt="last-commit">
   <img src="https://img.shields.io/github/languages/top/termuxhackers-id/SIGIT?style=for-the-badge&color=0080ff" alt="repo-top-language">
   <img src="https://img.shields.io/badge/Python-3.12%2B-blue?style=for-the-badge&logo=python&logoColor=white&color=0080ff" alt="Python">
